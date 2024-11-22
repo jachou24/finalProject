@@ -15,7 +15,7 @@ receiver_email = input("Please enter your email:")  # Recipient's email
 
 # Create the email content
 subject = "Photobooth"
-body = "Excellent photo! Here it is:"
+body = "Excellent photo! Here it is:\n"
 
 # Construct email
 message = MIMEMultipart()
