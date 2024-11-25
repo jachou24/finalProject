@@ -1,25 +1,17 @@
 import cv2 as cv
-import interface
 
 ### VIDEO CAPTURE ###
 
 cap = cv.VideoCapture(0)
 
-while True:
-    ret, frame = cap.read()
+shouldBreak = False
 
-    # displaying video capture
-    # cv.imshow('Webcam', frame)
-    interface.showCap(frame)
+def getCap():
+    r, frame = cap.read()
     
     # checking if user pressed quit
     if cv.waitKey(1) == ord('q'):
-        break
+        shouldBreak = True
+        cap.release()
 
-    def takePhoto():
-        return frame
-    
-
-# quit proceedure
-cap.release()
-cv.destroyAllWindows()
+    return frame, shouldBreak
