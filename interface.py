@@ -2,10 +2,6 @@ import tkinter as tk
 import ayoThatsCap
 import superSonicSnailMail
 
-root = tk.Tk()
-fname = tk.Button(root, text="TAKE PHOTO", command=lambda: superSonicSnailMail.sendEmail(ayoThatsCap.getCap()))
-fname.pack()
-
 class filterButtons():
     def __init__(self, filterName, imgName):
         self.fname = filterName
@@ -16,15 +12,8 @@ class filterButtons():
     def applyFilter(imgName):
         pass
         #img.show()
-filters = {
-    'sunglasses' : 'sunglasses.jpg',
-    'mustache' : 'mustache.jpg',
-    'hearts blush' : 'heartsBlush.jpg'
-}
-for fil in filters:
-    newButton = filterButtons(fil, filters[fil])
 
-def requestEmail(emailAdd):
+def requestEmail():
     addressInstructions = tk.label(root, text="Enter your email:")
     addressInstructions.pack()
     adressBox = tk.Entry(root, textvariable=emailAdd)
@@ -41,4 +30,24 @@ def dispCap():
         frame = ayoThatsCap.getCap()[0]
         showCap(frame)
 
-root.mainloop()
+filters = {
+    'sunglasses' : 'sunglasses.jpg',
+    'mustache' : 'mustache.jpg',
+    'hearts blush' : 'heartsBlush.jpg'
+}
+
+def main():
+    root = tk.Tk()
+    root.title('Photobooth')
+    receiver = requestEmail()
+    fname = tk.Button(root, text="TAKE PHOTO", command=lambda: superSonicSnailMail.sendEmail(ayoThatsCap.getCap(), receiver))
+    fname.pack()
+
+    for fil in filters:
+        newButton = filterButtons(fil, filters[fil])
+
+    dispCap()
+
+    root.mainloop()
+
+main()
