@@ -1,5 +1,5 @@
 import cv2 as cv
-import buttons
+import interface
 
 ### VIDEO CAPTURE ###
 
@@ -9,11 +9,16 @@ while True:
     ret, frame = cap.read()
 
     # displaying video capture
-    cv.imshow('Webcam', frame)
+    # cv.imshow('Webcam', frame)
+    interface.showCap(frame)
     
     # checking if user pressed quit
     if cv.waitKey(1) == ord('q'):
         break
+
+    def takePhoto():
+        return frame
+    
 
 # quit proceedure
 cap.release()
