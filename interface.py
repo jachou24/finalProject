@@ -1,6 +1,10 @@
 import tkinter as tk
+from PIL import ImageTk, Image
+import threading
 import ayoThatsCap
 import superSonicSnailMail
+
+root = tk.Tk()
 
 class filterButtons():
     def __init__(self, filterName, imgName):
@@ -14,14 +18,15 @@ class filterButtons():
         #img.show()
 
 def requestEmail():
-    addressInstructions = tk.label(root, text="Enter your email:")
+    emailAdd = tk.StringVar()
+    addressInstructions = tk.Label(root, text="Enter your email:")
     addressInstructions.pack()
     adressBox = tk.Entry(root, textvariable=emailAdd)
     adressBox.pack()
     return emailAdd
 
 def showCap(img):
-    imgtk = tk.ImageTk.PhotoImage(img)
+    imgtk = ImageTk.PhotoImage(Image.fromarray(img))
     imgShow = tk.Label(root, image=imgtk)
     imgShow.pack()
 
@@ -37,7 +42,6 @@ filters = {
 }
 
 def main():
-    root = tk.Tk()
     root.title('Photobooth')
     receiver = requestEmail()
     fname = tk.Button(root, text="TAKE PHOTO", command=lambda: superSonicSnailMail.sendEmail(ayoThatsCap.getCap(), receiver))
@@ -46,8 +50,10 @@ def main():
     for fil in filters:
         newButton = filterButtons(fil, filters[fil])
 
-    dispCap()
-
     root.mainloop()
 
-main()
+threadMain = threading.Thread(target=main)
+threadCap = threading.Thread(target=dispCap)
+
+threadMain.start()
+threadCap.start()

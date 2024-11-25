@@ -1,12 +1,11 @@
 import cv2 as cv
 
 ### VIDEO CAPTURE ###
-
 cap = cv.VideoCapture(0)
 
-shouldBreak = False
-
 def getCap():
+    shouldBreak = False
+
     r, frame = cap.read()
     
     # checking if user pressed quit
